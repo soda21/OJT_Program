@@ -4,22 +4,24 @@ import Navbar from "./pages/Navbar";
 
 import Message from "./pages/Message";
 import List from "./pages/Users/List";
-import AddEdit from "./pages/Users/AddEdit";
+import AddUser from "./pages/Users/AddUser";
 import About from "./pages/Users/About";
 import View from "./pages/Users/View";
 import { Navigate } from "react-router-dom";
 import { Routes, Route } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "./context/AuthContext";
-
+import {  userInputs } from "./formSource";
 function App() {
   const { currentUser } = useContext(AuthContext);
   // currenUserがfalseの場合、top画面にいけないようにRequireAuthでバインドをかける
   // const currentUser = true;
   const RequireAuth = ({ children }) => {
+    
     return currentUser ? children : <Navigate to="/login" />;
   };
-  // console.log(currentUser);
+  console.log(currentUser==null);
+ 
 
   return (
     <>
@@ -47,10 +49,10 @@ function App() {
             }
           />
           <Route
-            path="update/:id"
+            path="adduser"
             element={
               <RequireAuth>
-                <AddEdit />
+                <AddUser inputs={userInputs}/>
               </RequireAuth>
             }
           />

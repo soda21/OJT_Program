@@ -14,8 +14,8 @@ const Navbar = () => {
           <span className="logo">OJTPAGE</span>
         </div>
         <div className="topRight">
-          <Link to="/users" className="topbarIconContainer">
-            <span>USERLIST</span>
+          <Link to="/adduser" className="topbarIconContainer">
+            <span>USER ADD</span>
           </Link>
           {/* <Link to="/ABOUT" className="topbarIconContainer">
             <span>LOGOUT</span>
