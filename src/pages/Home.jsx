@@ -1,14 +1,18 @@
-import Navbar from "./Navbar";
-
-import Message from "./Message";
-
+// import Navbar from "./Navbar";
+// import Sidebar from "./Sidebar";
+// import Message from "./Message";
+// import NewUser from "./Users/AddEdit";
+import "./Home.css";
 const Home = (userLoginInfo) => {
   console.log(userLoginInfo);
   return (
-    <div className="home">
-      <Navbar />
-      <Message />
-      Home
+    <div>
+      {/* <Navbar /> */}
+      {/* <Message /> */}
+      {/* <Sidebar /> */}
+      <div className="container">
+
+      </div>
     </div>
   );
 };

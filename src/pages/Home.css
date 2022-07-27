@@ -1,0 +1,13 @@
+.home{
+    flex: 4;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container{
+    flex: 4;
+    display: flex;
+    margin: 20px;
+}
