@@ -3,7 +3,6 @@ import Login from "./pages/Login";
 import Navbar from "./pages/Navbar";
 
 import Message from "./pages/Message";
-import List from "./pages/Users/List";
 import AddUser from "./pages/Users/AddUser";
 import About from "./pages/Users/About";
 import View from "./pages/Users/View";
@@ -39,15 +38,7 @@ function App() {
               </RequireAuth>
             }
           />
-          <Route
-            path="users"
-            index
-            element={
-              <RequireAuth>
-                <List />
-              </RequireAuth>
-            }
-          />
+      
           <Route
             path="adduser"
             element={

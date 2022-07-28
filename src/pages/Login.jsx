@@ -39,7 +39,7 @@ const Login = () => {
 
       <br />
       <div className="loginInfo">
-        <p>mail:here@test.com password:123456</p>
+        <p>mail:test@test.com password:123456</p>
       </div>
       <form onSubmit={handleLogin}>
         <input
