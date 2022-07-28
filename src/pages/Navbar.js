@@ -3,20 +3,34 @@ import "./Navbar.css";
 import { Link } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const { currentUser } = useContext(AuthContext);
-  
+  const navigate = useNavigate();
+  const { dispatch } = useContext(AuthContext);
+
+  const logout = (e) => {
+    e.preventDefault();
+    // AuthReducerへ
+    dispatch({ type: "LOGOUT" });
+    
+    navigate("/login");
+  };
   return (
     <div className="topbar">
       <div className="topbarWrapper">
         <div className="topLeft">
-          <span className="logo">OJTPAGE</span>
+          <Link to="/">
+            <span className="logo">OJT_PAGE</span>
+          </Link>
         </div>
         <div className="topRight">
-          <Link to="/adduser" className="topbarIconContainer">
-            <span>USER ADD</span>
-          </Link>
+          {currentUser && (
+            <Link to="/adduser" className="topbarIconContainer">
+              <span>USER ADD</span>
+            </Link>
+          )}
           {/* <Link to="/ABOUT" className="topbarIconContainer">
             <span>LOGOUT</span>
           </Link> */}
@@ -24,7 +38,9 @@ const Navbar = () => {
           {/* ログインしている時だけ表示 */}
           {currentUser && (
             <div className="topbarIconContainer">
-              <span>LOGOUT</span>
+              <Link to="/login" onClick={logout}>
+                <span>LOGOUT</span>
+              </Link>
             </div>
           )}
 

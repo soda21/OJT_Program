@@ -19,7 +19,8 @@ const AddUser = ({ inputs }) => {
   const handleInput = (e) => {
     const id = e.target.id;
     const value = e.target.value;
-
+    console.log("valueは",{value})
+    console.log("...dataは",{...data})
     setdata({ ...data, [id]: value });
   };
   console.log("ログイン用のデータ", data);

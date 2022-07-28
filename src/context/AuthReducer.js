@@ -8,6 +8,8 @@ const AuthReducer = (state, action) => {
       };
     }
     case "LOGOUT": {
+      // ローカルストレージを削除
+      window.localStorage.removeItem("user");
       return {
         currentUser: null,
       };
