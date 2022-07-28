@@ -1,25 +1,59 @@
-import React, { useState, useEffect } from "react";
-import { useHistory, useParams } from "react-router-dom";
-
-// import { auth, db, storage } from "../../firebase";
-//https:firebase.google.com/docs/auth/web/password-auth
-// import { createUserWithEmailAndPassword } from "firebase/auth";
+import React, { useState } from "react";
+import { auth, db } from "../../firebase";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 import "./AddUser.css";
 
+import { useNavigate } from "react-router-dom";
+// データを追加
+//https:firebase.google.com/docs/firestore/manage-data/add-data?hl=ja&authuser=0
+import { doc, serverTimestamp, setDoc } from "firebase/firestore";
+
 // inputsはformSource.jsからフォームの材料を取得
-const AddEdit = ({ inputs }) => {
-  console.log(inputs);
+const AddUser = ({ inputs }) => {
+  
+  const [data, setdata] = useState({});
+  const navigate = useNavigate();
+  // console.log(inputs);
 
-  const handleInput = () => {};
+  // フォームの文字を保存 ログイン用のデータ
+  const handleInput = (e) => {
+    const id = e.target.id;
+    const value = e.target.value;
 
-  const onSubmit = () => {};
+    setdata({ ...data, [id]: value });
+  };
+  console.log("ログイン用のデータ", data);
+ 
+  const onSubmit = async (e) => {
+    e.preventDefault();
+      try {
+      // 認証用のuserを作成する
+      // https://firebase.google.com/docs/auth/web/password-auth?hl=ja
+      const res = await createUserWithEmailAndPassword(
+        auth,
+        data.email,
+        data.password
+      );
+      // フォームを保存する
+      await setDoc(doc(db, "user", res.user.uid), {
+        ...data,
+        timeStamp: serverTimestamp(),
+      });
+      // ルートに戻す
+      navigate("/")
+      
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  
   return (
     <div className="wrapper">
       <div className="formInput">
         <div className="Title">
-          <h1>新規ユーザーの追加</h1>
+          <h1>ユーザーの追加</h1>
         </div>
-        <form onSububmit={onSubmit}>
+        <form onSubmit={onSubmit}>
           {inputs.map((input) => (
             <div key={input.name}>
               <label htmlfor="name">{input.label}</label>
@@ -38,4 +72,4 @@ const AddEdit = ({ inputs }) => {
   );
 };
 
-export default AddEdit;
+export default AddUser;

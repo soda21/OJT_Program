@@ -13,8 +13,7 @@ const Login = () => {
 
   const navigate = useNavigate();
 
-
-const{dispatch}=useContext(AuthContext)
+  const { dispatch } = useContext(AuthContext);
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -23,33 +22,39 @@ const{dispatch}=useContext(AuthContext)
       .then((userCredential) => {
         // Signed in
         const user = userCredential.user;
-        dispatch({type:"LOGIN",payload:user})
-        navigate("/")
+        dispatch({ type: "LOGIN", payload: user });
+        navigate("/");
         // toast('ログインしました')
       })
       .catch((error) => {
         setError(error);
-        
+
         // toast('ログインに失敗しました')
       });
   };
   return (
-    <div className="login">          
+    <div className="login">
       <h3 className="loginLogo">LogIn</h3>
+      <br />
+
+      <br />
+      <div className="loginInfo">
+        <p>mail:test@test.com password:123456</p>
+      </div>
       <form onSubmit={handleLogin}>
         <input
           type="email"
           placehoder="email"
           onChange={(e) => setEmail(e.target.value)}
         />
-        <br/>
+        <br />
         <input
           type="password"
           placehoder="password"
           onChange={(e) => setPassword(e.target.value)}
         />
-         <br/>
-        <button type="submit">Login</button>   
+        <br />
+        <button type="submit">Login</button>
       </form>
     </div>
   );
