@@ -50,7 +50,11 @@ const Home = (userLoginInfo) => {
           <hr />
           <h1> 登録User一覧</h1>
           <Link to="/adduser" className="topbarIconContainer">
+<<<<<<< HEAD
             <button className="useradd">新規ユーザーの追加</button>
+=======
+            <button>新規ユーザーの追加</button>
+>>>>>>> ojt/master
           </Link>
         </div>
         <div className="tablewrapper">
