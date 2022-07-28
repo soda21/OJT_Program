@@ -3,25 +3,25 @@ export const userInputs = [
     id: "name",
     label: "名前",
     type: "text",
-    placeholder: "john_doe",
+    placeholder: "",
    
   },
   {
     id: "email",
     label: "Email",
     type: "mail",
-    placeholder: "john_doe@gmail.com",
+    placeholder: "",
   },
   {
     id: "phone",
     label: "電話番号",
     type: "text",
-    placeholder: "+1 234 567 89",
+    placeholder: "",
   },
   {
     id: "password",
-    label: "Password",
-    type: "password",
+    label: "Password※6文字以上",
+    type: "",
   }
 ];
 
