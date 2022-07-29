@@ -79,9 +79,10 @@ const Home = (userLoginInfo) => {
                     </div>
                   </td>
                   <td>
-                    {/* <Link to="/users/test" style={{ textDecoration: "none" }}>
+                    <Link to={`/users/${user.id}`} style={{ textDecoration: "none" }}>
                       <div className="viewButton">更新</div>
-                    </Link> */}
+                    </Link>
+                    
                   </td>
                 </tr>
               ))}
