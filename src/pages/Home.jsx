@@ -28,12 +28,14 @@ const Home = (userLoginInfo) => {
     };
   }, []);
   const handleDelete = async (id) => {
-    try {
-      console.log(id);
-      await deleteDoc(doc(db, "users", id));
-      setData(data.filter((item) => item.id !== id));
-    } catch (err) {
-      console.log(err);
+    if (window.confirm("本当に削除しますか")) {
+      try {
+        console.log(id);
+        await deleteDoc(doc(db, "users", id));
+        setData(data.filter((item) => item.id !== id));
+      } catch (err) {
+        console.log(err);
+      }
     }
   };
 
@@ -81,11 +83,13 @@ const Home = (userLoginInfo) => {
                   <td>
                     {/* emailを渡すときは上のようにする今回は使わなかった・・・ */}
                     {/* <Link to={`/user/${user.id}`} state={{ email:`${user.email}`}} style={{ textDecoration: "none" }}> */}
-                    <Link to={`/user/${user.id}`} state={{ email:`${user.email}`}} style={{ textDecoration: "none" }}>
-              
+                    <Link
+                      to={`/user/${user.id}`}
+                      state={{ email: `${user.email}` }}
+                      style={{ textDecoration: "none" }}
+                    >
                       <div className="viewButton">更新</div>
                     </Link>
-                    
                   </td>
                 </tr>
               ))}
