@@ -4,8 +4,8 @@ import Navbar from "./pages/Navbar";
 
 import Message from "./pages/Message";
 import AddUser from "./pages/Users/AddUser";
-import About from "./pages/Users/About";
-import View from "./pages/Users/View";
+import UserDetail from "./pages/Users/UserDetail";
+import View from "./pages/Users/UserDetail";
 import { Navigate } from "react-router-dom";
 import { Routes, Route } from "react-router-dom";
 import { useContext } from "react";
@@ -48,21 +48,14 @@ function App() {
             }
           />
           <Route
-            path="view/:id"
+            path="user/:id"
             element={
               <RequireAuth>
-                <View />
+                <View inputs={userInputs}/>
               </RequireAuth>
             }
           />
-          <Route
-            path="about"
-            element={
-              <RequireAuth>
-                <About />
-              </RequireAuth>
-            }
-          />
+      
         </Route>
       </Routes>
     </>

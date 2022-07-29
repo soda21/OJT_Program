@@ -79,7 +79,10 @@ const Home = (userLoginInfo) => {
                     </div>
                   </td>
                   <td>
-                    <Link to={`/users/${user.id}`} style={{ textDecoration: "none" }}>
+                    {/* emailを渡すときは上のようにする今回は使わなかった・・・ */}
+                    {/* <Link to={`/user/${user.id}`} state={{ email:`${user.email}`}} style={{ textDecoration: "none" }}> */}
+                    <Link to={`/user/${user.id}`} state={{ email:`${user.email}`}} style={{ textDecoration: "none" }}>
+              
                       <div className="viewButton">更新</div>
                     </Link>
                     
