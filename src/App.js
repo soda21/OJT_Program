@@ -1,26 +1,24 @@
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Navbar from "./pages/Navbar";
-
+import React from "react";
 import Message from "./pages/Message";
 import AddUser from "./pages/Users/AddUser";
 import UserDetail from "./pages/Users/UserDetail";
-import View from "./pages/Users/UserDetail";
 import { Navigate } from "react-router-dom";
 import { Routes, Route } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "./context/AuthContext";
-import {  userInputs } from "./formSource";
+import { userInputs } from "./formSource";
+import {Chart} from "./Chart/Chart"
 function App() {
   const { currentUser } = useContext(AuthContext);
   // currenUserがfalseの場合、top画面にいけないようにRequireAuthでバインドをかける
   // const currentUser = true;
   const RequireAuth = ({ children }) => {
-    
     return currentUser ? children : <Navigate to="/login" />;
   };
-  console.log(currentUser==null);
- 
+  console.log(currentUser == null);
 
   return (
     <>
@@ -38,12 +36,12 @@ function App() {
               </RequireAuth>
             }
           />
-      
+
           <Route
             path="adduser"
             element={
               <RequireAuth>
-                <AddUser inputs={userInputs}/>
+                <AddUser inputs={userInputs} />
               </RequireAuth>
             }
           />
@@ -51,11 +49,18 @@ function App() {
             path="user/:id"
             element={
               <RequireAuth>
-                <View inputs={userInputs}/>
+                <UserDetail inputs={userInputs} />
               </RequireAuth>
             }
           />
-      
+          <Route
+            path="chart"
+            element={
+              <RequireAuth>
+                <Chart />
+              </RequireAuth>
+            }
+          />
         </Route>
       </Routes>
     </>

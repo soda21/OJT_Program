@@ -1,6 +1,6 @@
 import { createContext, useEffect, useReducer } from "react";
 import AuthReducer from "./AuthReducer";
-
+import React from "react";
 const INITIAL_STATE = {
   // ローカルストレージからjsonを読み込むのでオブジェクト化
   // 左辺がfalseだったら右辺を返す

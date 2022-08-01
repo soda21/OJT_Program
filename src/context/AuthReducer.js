@@ -1,3 +1,4 @@
+import React from "react";
 const AuthReducer = (state, action) => {
   console.log('authreducer')
   switch (action.type) {

@@ -28,8 +28,8 @@ const Navbar = () => {
         </div>
         <div className="topRight">
           {currentUser && (
-            <Link to="/adduser" className="topbarIconContainer">
-              <span>USER ADD</span>
+            <Link to="/chart" className="topbarIconContainer">
+              <span>DATAVISUALIZING</span>
             </Link>
           )}
           {/* <Link to="/ABOUT" className="topbarIconContainer">
