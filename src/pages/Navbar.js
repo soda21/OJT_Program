@@ -22,14 +22,14 @@ const Navbar = () => {
     <div className="topbar">
       <div className="topbarWrapper">
         <div className="topLeft">
-          <Link to="/">
+          <Link to="/" className="linkname">
             <span className="logo">OJT_PAGE</span>
           </Link>
         </div>
         <div className="topRight">
           {currentUser && (
             <Link to="/chart" className="topbarIconContainer">
-              <span>DATAVISUALIZING</span>
+              <span>KPI_MONITORING</span>
             </Link>
           )}
           {/* <Link to="/ABOUT" className="topbarIconContainer">
@@ -39,7 +39,7 @@ const Navbar = () => {
           {/* ログインしている時だけ表示 */}
           {currentUser && (
             <div className="topbarIconContainer">
-              <Link to="/login" onClick={logout}>
+              <Link to="/login" onClick={logout} className="linkname">
                 <span>LOGOUT</span>
               </Link>
             </div>

@@ -18,13 +18,20 @@ export const Chart = () => {
       <p>まだ何を集計するか。。。考え中、</p>
       <ul type="circle">
         <li>
-          案１：広告に関する集計、出稿する側の立場とする。費用とどのサイトがクリックしてくれて購入してくれたか
+          <p>案：広告に関する集計、出稿する側の立場とする。
+          広告対効果をモニタリング</p>
+          <p>どのサイトに出稿するのが効果でるのか？出稿しているサイト別に
+          クリック数と購入につながった数を集計</p>
         </li>
-        <li>案２：月別の受注数と受注確定見込みランキング</li>
-        <li>案３：予算と企業の着地見込みなど</li>
+        <li>案：月別の受注数と受注確定見込み</li>
+        <li>案：国内売上と海外売上の比率</li>
+        <li>案：予算と実績の比較、企業の着地見込みなど</li>
+        <li>案：受注と利益率のリスト化</li>
+        <li>案：受注利益率を企業別または商品別にスキャッターチャート</li>
+        <li>案：契約数と解約数</li>
       </ul>
       <p>
-        User以外に入力する対象を決めてグラフで集計する(かなりアルゴリズム難しいと思われる)
+        User以外に入力する対象を決めてグラフで集計する(かなりアルゴリズム難しい??)
       </p>
       <p>
         下記表からいくつか選択し改良する。動的にFIREBASEから値を取得できるようにする
@@ -37,12 +44,12 @@ export const Chart = () => {
       </div>
       <hr />
       <div className="Waterfall">
-        <h2>WaterfallChart今期受注見通</h2>
+        <h2>WaterfallChart</h2>
         <Waterfall />
       </div>
       <hr />
       <div className="barchartwithminheight">
-        <h2>barchartwithminheight サイト別広告クリック数</h2>
+        <h2>barchartwithminheight </h2>
         <SimpleBarChart />
       </div>
       <hr />

@@ -40,7 +40,9 @@ const Login = () => {
 
       <br />
       <div className="loginInfo">
-        <p>mail:test@test.com password:123456</p>
+        <p>email:test@test.com </p>
+        <p>password:123456</p>
+
       </div>
       <form onSubmit={handleLogin}>
         <input
@@ -55,7 +57,9 @@ const Login = () => {
           onChange={(e) => setPassword(e.target.value)}
         />
         <br />
+        <div className="loginBtn">
         <button type="submit">Login</button>
+        </div>
       </form>
     </div>
   );
