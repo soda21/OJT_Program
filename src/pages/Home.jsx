@@ -4,15 +4,16 @@ import { db } from "../firebase";
 import { collection, deleteDoc, doc, onSnapshot } from "firebase/firestore";
 import { Link } from "react-router-dom";
 import React from "react";
+import BarChartComponent from "../Chart/ChartComponents/BarChartComponent";
 
 const Home = (userLoginInfo) => {
   const [search, setSearch] = useState("");
   // console.log(userLoginInfo);
   const [data, setData] = useState([]);
-  // 並び替えをするためのusestate
+  // 並び替えをするためusestate
   const [orderName, setOrderName] = useState(true);
 
-  // // firebaseからデータを取得する
+  //  firebaseからデータを取得-------------------------------------
   useEffect(() => {
     const unsub = onSnapshot(
       collection(db, "user"),
@@ -22,6 +23,7 @@ const Home = (userLoginInfo) => {
           list.push({ id: doc.id, ...doc.data() });
         });
         // 名前で昇順に並び替え
+
         list = list.sort((a, b) => {
           return a.name.localeCompare(b.name);
         });
@@ -38,7 +40,7 @@ const Home = (userLoginInfo) => {
     };
   }, []);
 
-  // 並び替え
+  // 並び替え-------------------------------------
   useEffect(() => {
     sortByName();
   }, [orderName, []]);
@@ -46,20 +48,20 @@ const Home = (userLoginInfo) => {
   // 名前で並び替え
   const sortByName = () => {
     // console.log(orderName);
-    if (orderName === true) {
-      console.log("並び替えtrue");
+    if (orderName) {
+      // console.log("並び替えtrue");
       data.sort((a, b) => {
         return b.name.localeCompare(a.name);
       });
     }
     if (orderName === false) {
-      console.log("並び替えfalse");
+      // console.log("並び替えfalse");
       data.sort((a, b) => {
         return a.name.localeCompare(b.name);
       });
     }
   };
-
+  // 削除-------------------------------------
   const handleDelete = async (id) => {
     if (window.confirm("本当に削除しますか")) {
       try {
@@ -81,18 +83,24 @@ const Home = (userLoginInfo) => {
         <div className="manual">
           <h3>更新履歴</h3>
           <p>
-            新規登録でUSERを新規追加、新規作成したユーザーのメールとパスワード情報を使ってでログイン可能
+            新規ユーザーの追加、新規ユーザーのメールとパスワードでログイン可能
           </p>
-          <p>USER情報の削除、更新ができます。</p>
-          <p>右上のLOGOUTを押すとLogOutされtopページへ</p>
+          <p>USER情報の削除、更新</p>
+          <p>右上のLOGOUTを押すとLogINページへ</p>
           <p>
-            8/1右上のKPI_MONITORING作成グラフのたたき台、月別ユーザー数推移など今後使っていきたい
+            8/1右上Navbar、KPI_MONITORINGリンク作成。グラフのたたき台。月別ユーザー数推移など今後使っていく。
           </p>
-          <p>8/2検索作成。要改善、今はまだ名前のみ検索</p>
-          <p>8/3並び替え。要改善、名前のみで並び替え</p>
+          <p>
+            8/2検索(名前のみ)、要改善、contextAPIかReduxでGlobalに管理させる
+          </p>
+          <p>
+            8/3並び替え(名前のみ)、要改善、contextAPIかReduxでGlobalに値に管理させる
+          </p>
+          <p>8/3ダミー値での表を作成</p>
           <p></p>
           <hr />
-          {/* 検索------------------------------------------------------- */}
+          {/* 検索・並び替え------------------------------------------------------- */}
+          <h2>並び替え、検索(TODO：名前以外での検索、ソート )</h2>
           <span className="seachbox">
             検索(名前のみ)
             <input
@@ -112,9 +120,18 @@ const Home = (userLoginInfo) => {
               </button>
             </div>
           </span>
+          <hr />
+          {/* Chart------------------------------------------------------- */}
+          <div className="graphcontainer">
+            <h2>新規登録ユーザー数(今後、登録User数と連動予定)</h2>
+            <div className="simpoleBarChart">
+              <BarChartComponent />
+            </div>
+          </div>
+
           {/* UserList------------------------------------------------------- */}
           <hr />
-          <h1> 登録User一覧</h1>
+          <h2> 登録User一覧</h2>
           <Link to="/adduser" className="topbarIconContainer">
             <button className="useradd">新規ユーザーの追加</button>
           </Link>

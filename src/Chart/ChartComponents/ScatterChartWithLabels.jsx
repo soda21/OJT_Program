@@ -22,7 +22,7 @@ const data = [
 export default function ScatterChartWithLabels() {
   return (
     <ScatterChart
-      width={400}
+      width={1000}
       height={400}
       margin={{
         top: 20,

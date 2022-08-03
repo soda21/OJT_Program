@@ -59,7 +59,7 @@ const data = [
 export default function SimpleLineChart() {
   return (
     <LineChart
-      width={500}
+      width={1000}
       height={300}
       data={data}
       margin={{

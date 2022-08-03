@@ -61,7 +61,7 @@ const data = [
 export default function LineBarAreaComposedChart() {
   return (
     <ComposedChart
-      width={500}
+      width={1000}
       height={400}
       data={data}
       margin={{

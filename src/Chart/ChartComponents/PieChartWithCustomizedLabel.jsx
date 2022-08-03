@@ -45,7 +45,7 @@ export default function SimpleRadarChart() {
         cy={200}
         labelLine={false}
         label={renderCustomizedLabel}
-        outerRadius={80}
+        outerRadius={160}
         fill="#8884d8"
         dataKey="value"
       >

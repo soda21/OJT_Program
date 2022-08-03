@@ -16,7 +16,7 @@ const data = [
     pv: 0, // pv is the floating part (transparent)
   },
   {
-    name: "経済状況の悪化による受注減",
+    name: "人員不足",
     uv: -400,
     pv: 2400, // to get this pv, we use 01/2020's uv + pv
   },
@@ -26,23 +26,23 @@ const data = [
     pv: 2000, // use 02/2020's uv + pv, and so forth
   },
   {
-    name: "新規市場開拓",
+    name: "新商品受注",
     uv: 800,
     pv: 1600,
   },
   {
-    name: "海外為替影響によるプラス",
+    name: "海外円安影響",
     uv: 900,
     pv: 2400,
   },
 
   {
-    name: "新商品売上",
+    name: "新興国受注",
     uv: 900,
     pv: 3300,
   },
   {
-    name: "当期受注予想",
+    name: "当期受注着地見込",
     uv: 4200,
     pv: 0,
   },
@@ -51,7 +51,7 @@ const data = [
 function Waterfall() {
   return (
     <BarChart
-      width={650}
+      width={1050}
       height={300}
       data={data}
       margin={{
