@@ -44,7 +44,7 @@ export const Chart = () => {
         ※現在はダミーデータ
       </p>
       <hr />
-      <div className="barchartwithminheight">
+      {/* <div className="barchartwithminheight">
         <h2>SimpleLineChart</h2>
         <SimpleLineChart />
       </div>
@@ -59,7 +59,7 @@ export const Chart = () => {
         <SimpleBarChart />
       </div> */}
       <hr />
-      <div className="LineBarAreaComposedChart">
+      {/* <div className="LineBarAreaComposedChart">
         <h2>LineBarAreaComposedChart </h2>
         <LineBarAreaComposedChart />
       </div>
@@ -82,8 +82,8 @@ export const Chart = () => {
       <div className="LineBarAreaComposedChart">
         <h2>StackedAreaChart </h2>
         <StackedAreaChart />
-      </div>
-      <hr />
+      </div> */}
+      <hr /> 
       <div className="LineBarAreaComposedChart">
         <h2>BarChartComponent </h2>
         <BarChartComponent />

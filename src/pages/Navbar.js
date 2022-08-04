@@ -10,7 +10,7 @@ const Navbar = () => {
   const navigate = useNavigate();
   const { dispatch } = useContext(AuthContext);
 
-  console.log(currentUser);
+  // console.log(currentUser);
   const logout = (e) => {
     e.preventDefault();
     // AuthReducerへ

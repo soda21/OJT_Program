@@ -151,7 +151,7 @@ const Home = (userLoginInfo) => {
           <div className="graphcontainer">
             <h2>新規登録ユーザー数(今後、登録User数と連動予定)</h2>
             <div className="simpoleBarChart">
-              <BarChartComponent />
+              {/* <BarChartComponent /> */}
             </div>
           </div>
 

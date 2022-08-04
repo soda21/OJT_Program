@@ -9,21 +9,24 @@ var items = [
   { name: "Zeros", value: 37 },
 ];
 
-// 名前順にソート
-const c = items.sort((a, b) => {
-  if (a.name < b.name) {
-    return -1;
-  }
-  if (a.name > b.name) {
-    return 1;
-  }
 
-  // names must be equal
-  return 0;
-});
+const mergedItems=[...items,{name:'32',value:33}]
+mergedItems
+// // 名前順にソート
+// const c = items.sort((a, b) => {
+//   if (a.name < b.name) {
+//     return -1;
+//   }
+//   if (a.name > b.name) {
+//     return 1;
+//   }
+
+//   // names must be equal
+//   return 0;
+// });
 
 // const c =items.sort();
-items;
+// items;
 
 const arrA = [1, 2, 3, 4, 5];
 const arrB = [6, 7, 8, 9, 10];
@@ -228,31 +231,3 @@ const dataList = [
 
   console.log("重複する要素を検出", duplicatedValues); // [2, 4, 6]
 }
-
-// フィルターした商品
-// useEffect(() => {
-//   setorderData(
-//     data.filter((item) =>
-//       // Object.entries() を使ってObject → 配列変換
-//       // Array.includes配列に特定の要素が含まれるか
-//       Object.entries(search).every(([key, value]) =>
-//         item[key].includes(value)
-//       )
-//     )
-//   );
-// }, [data, orderData, search]);
-// useEffect(() => {
-//   if (sort === "newest") {
-//     setorderData((prev) =>
-//       [...prev].sort((a, b) => a.createdAt - b.createdAt)
-//     );
-//   } else if (sort === "asc") {
-//     setorderData((prev) =>
-//       [...prev].sort((a, b) => a.price - b.price)
-//     );
-//   } else {
-//     setorderData((prev) =>
-//       [...prev].sort((a, b) => b.price - a.price)
-//     );
-//   }
-// }, [sort]);
