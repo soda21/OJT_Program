@@ -32,9 +32,7 @@ const Navbar = () => {
               <span>KPI_MONITORING</span>
             </Link>
           )}
-          {/* <Link to="/ABOUT" className="topbarIconContainer">
-            <span>LOGOUT</span>
-          </Link> */}
+        
 
           {/* ログインしている時だけ表示 */}
           {currentUser && (

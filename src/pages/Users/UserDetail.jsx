@@ -5,8 +5,6 @@ import { useParams, useNavigate } from "react-router-dom";
 
 import {
   doc,
-  serverTimestamp,
-  setDoc,
   updateDoc,
   collection,
   onSnapshot,
