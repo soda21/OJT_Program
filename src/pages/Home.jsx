@@ -5,14 +5,19 @@ import { collection, deleteDoc, doc, onSnapshot } from "firebase/firestore";
 import { Link } from "react-router-dom";
 import React from "react";
 import BarChartComponent from "../Chart/ChartComponents/BarChartComponent";
+import { useMemo } from "react";
 
 const Home = (userLoginInfo) => {
   const [nameSearch, setNameSearch] = useState("");
   const [emailSearch, setEmailSearch] = useState("");
   const [phoneNSearch, setphoneNSearch] = useState("");
   const [data, setData] = useState([]);
-  // 並び替えをするためusestate
-  const [orderName, setOrderName] = useState(true);
+  // 並び替えをするためusestate　並び替えボタンを押すとboolean値が反転する
+  const [orderName, setOrderName] = useState({
+    name: true,
+    email: true,
+    phone: true,
+  });
 
   //  firebaseからデータを取得--------------------------------------------------------
   useEffect(() => {
@@ -24,9 +29,9 @@ const Home = (userLoginInfo) => {
           list.push({ id: doc.id, ...doc.data() });
         });
         // 名前で昇順に並び替え
-        list = list.sort((a, b) => {
-          return a.name.localeCompare(b.name);
-        });
+        // list = list.sort((a, b) => {
+        //   return a.name.localeCompare(b.name);
+        // });
         // mapで展開をするためセットする
         setData(list);
       },
@@ -41,26 +46,44 @@ const Home = (userLoginInfo) => {
   }, []);
 
   // 並び替え---------------------------------------------------------------------------
-  useEffect(() => {
-    sortByName();
-  }, [orderName, []]);
 
-  // 名前で並び替え
-  const sortByName = () => {
-    // console.log(orderName);
-    if (orderName) {
-      // console.log("並び替えtrue");
+  // 並び替えボタンを押す------------------------------------------
+  const nameSort = (prev) => {
+    // 並び替えボタンを押すとnameプロパティがtrue、false反転する
+    setOrderName({ name: !orderName.name, ...prev });
+  };
+  // --------------------------------------------------------------
+  // 再レンダリングされる？？？？
+  useEffect(() => {
+    sortByName("name");
+  }, [nameSort]);
+  useEffect(() => {
+    sortByName("email");
+  }, [orderName["email"]]);
+  useEffect(() => {
+    sortByName("phone");
+  }, [orderName["phone"]]);
+
+  // 並び替え　sortTargetにname,email,phoneが渡される
+  const sortByName = (sortTarget) => {
+    console.log(
+      "再レンダリング怪しいかも初回3回再レンダリング？・・・",
+      orderName
+    );
+    // useStateのorderNameのブーリアン値trueだったら(sortTargetはname,email,phone)
+    if (orderName[sortTarget]) {
       data.sort((a, b) => {
-        return b.name.localeCompare(a.name);
+        // 並び替え
+        return b[sortTarget].localeCompare(a[sortTarget]);
       });
     }
-    if (orderName === false) {
-      // console.log("並び替えfalse");
+    if (orderName[sortTarget] === false) {
       data.sort((a, b) => {
-        return a.name.localeCompare(b.name);
+        return a[sortTarget].localeCompare(b[sortTarget]);
       });
     }
   };
+
   // 検索---------------------------------------------------------------------------
   const search = (data) => {
     return data.filter(
@@ -103,6 +126,9 @@ const Home = (userLoginInfo) => {
           <p>
             8/4検索(名前、Email、電話番号で＆検索可能)、今後contextAPIかReduxにリファクタリング予定{" "}
           </p>
+          <p>
+            8/5並び替え。(名前、Email、電話番号で並び替え可能)、今後contextAPIかReduxにリファクタリング予定{" "}
+          </p>
           <hr />
           {/* 検索・並び替え------------------------------------------------------- */}
           <h2>検索</h2>
@@ -131,18 +157,34 @@ const Home = (userLoginInfo) => {
                 onChange={(e) => setphoneNSearch(e.target.value)}
               />
             </span>
-            
           </div>
           <div className="orderbox">
-            <h2>並び替え</h2>
+            <h2>並び替え(最初の一回目は反応しないバグ？？？)</h2>
+            <span className="searchfield">
+              <button className="order_btn" onClick={nameSort}>
+                名前
+              </button>
+            </span>
             <span className="searchfield">
               <button
                 className="order_btn"
-                onClick={() => {
-                  setOrderName(!orderName);
+                onClick={(prev) => {
+                  // 並び替えボタンを押すとemailプロパティがtrue、false反転する
+                  setOrderName({ email: !orderName.email, ...prev });
                 }}
               >
-                名前
+                Email
+              </button>
+            </span>
+            <span className="searchfield">
+              <button
+                className="order_btn"
+                onClick={(prev) => {
+                  // 並び替えボタンを押すとphoneプロパティがtrue、false反転する
+                  setOrderName({ phone: !orderName.phone, ...prev });
+                }}
+              >
+                Phone
               </button>
             </span>
           </div>
@@ -150,9 +192,7 @@ const Home = (userLoginInfo) => {
           {/* Chart------------------------------------------------------- */}
           <div className="graphcontainer">
             <h2>新規登録ユーザー数(今後、登録User数と連動予定)</h2>
-            <div className="simpoleBarChart">
-              {/* <BarChartComponent /> */}
-            </div>
+            <div className="simpoleBarChart">{/* <BarChartComponent /> */}</div>
           </div>
 
           {/* UserList------------------------------------------------------- */}
