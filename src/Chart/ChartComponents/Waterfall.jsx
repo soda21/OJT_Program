@@ -11,7 +11,7 @@ import {
 
 const data = [
   {
-    name: "当初受注予算",
+    name: "年初",
     uv: 2400, // uv is the part of the graph we want to show
     pv: 0, // pv is the floating part (transparent)
   },
@@ -42,7 +42,7 @@ const data = [
     pv: 3300,
   },
   {
-    name: "当期受注着地見込",
+    name: "当期予定",
     uv: 4200,
     pv: 0,
   },

@@ -4,8 +4,7 @@ import { db } from "../firebase";
 import { collection, deleteDoc, doc, onSnapshot } from "firebase/firestore";
 import { Link } from "react-router-dom";
 import React from "react";
-import BarChartComponent from "../Chart/ChartComponents/BarChartComponent";
-import { useMemo } from "react";
+import Waterfall from "../Chart/ChartComponents/Waterfall";
 
 const Home = (userLoginInfo) => {
   const [nameSearch, setNameSearch] = useState("");
@@ -28,11 +27,6 @@ const Home = (userLoginInfo) => {
         snapShot.docs.forEach((doc) => {
           list.push({ id: doc.id, ...doc.data() });
         });
-        // 名前で昇順に並び替え
-        // list = list.sort((a, b) => {
-        //   return a.name.localeCompare(b.name);
-        // });
-        // mapで展開をするためセットする
         setData(list);
       },
       (error) => {
@@ -52,10 +46,13 @@ const Home = (userLoginInfo) => {
     // 並び替えボタンを押すとnameプロパティがtrue、false反転する
     setOrderName({ name: !orderName.name, ...prev });
   };
+
   // --------------------------------------------------------------
-  // 再レンダリングされる？？？？
+  // useStateで並び替え管理、並び替えボタンを押したらboolean値反転
+  // 反転したらuseeffectで並び替えメソッド発火させる
   useEffect(() => {
     sortByName("name");
+    // エラーがでるのでボタン押すメソッドをdependencyに
   }, [nameSort]);
   useEffect(() => {
     sortByName("email");
@@ -64,12 +61,9 @@ const Home = (userLoginInfo) => {
     sortByName("phone");
   }, [orderName["phone"]]);
 
-  // 並び替え　sortTargetにname,email,phoneが渡される
+  // 並び替えメソッド　sortTargetにname,email,phoneが渡される
   const sortByName = (sortTarget) => {
-    console.log(
-      "再レンダリング怪しいかも初回3回再レンダリング？・・・",
-      orderName
-    );
+    console.log("初回3回再レンダリング？・・・", orderName);
     // useStateのorderNameのブーリアン値trueだったら(sortTargetはname,email,phone)
     if (orderName[sortTarget]) {
       data.sort((a, b) => {
@@ -104,8 +98,7 @@ const Home = (userLoginInfo) => {
       }
     }
   };
-  // console.log(search);
-  // console.log(data);
+
   return (
     <div>
       <div>
@@ -191,8 +184,8 @@ const Home = (userLoginInfo) => {
           <hr />
           {/* Chart------------------------------------------------------- */}
           <div className="graphcontainer">
-            <h2>新規登録ユーザー数(今後、登録User数と連動予定)</h2>
-            <div className="simpoleBarChart">{/* <BarChartComponent /> */}</div>
+            <h2>新規受注など(今後、連動予定)</h2>
+            <div className="simpoleBarChart"> <Waterfall /> </div>
           </div>
 
           {/* UserList------------------------------------------------------- */}
