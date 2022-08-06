@@ -45,7 +45,7 @@ const AddUser = ({ inputs }) => {
       console.log(err);
     }
   };
-  
+  console.log(data)
   return (
     <div className="wrapper">
       <div className="formInput">

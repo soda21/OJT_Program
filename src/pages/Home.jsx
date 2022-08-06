@@ -5,6 +5,7 @@ import { collection, deleteDoc, doc, onSnapshot } from "firebase/firestore";
 import { Link } from "react-router-dom";
 import React from "react";
 import Waterfall from "../Chart/ChartComponents/Waterfall";
+import BarChartComponent from "../Chart/ChartComponents/BarChartComponent";
 
 const Home = (userLoginInfo) => {
   const [nameSearch, setNameSearch] = useState("");
@@ -38,7 +39,7 @@ const Home = (userLoginInfo) => {
       unsub();
     };
   }, []);
-
+console.log(data)
   // 並び替え---------------------------------------------------------------------------
 
   // 並び替えボタンを押す------------------------------------------
@@ -138,7 +139,7 @@ const Home = (userLoginInfo) => {
               <label htmlFor="email">Email</label>
               <input
                 className="search"
-                placeholder="検索する名前を入力してください..."
+                placeholder="検索するemailを入力してください..."
                 onChange={(e) => setEmailSearch(e.target.value)}
               />
             </span>
@@ -146,13 +147,13 @@ const Home = (userLoginInfo) => {
               <label htmlFor="phone">電話番号</label>
               <input
                 className="search"
-                placeholder="検索する名前を入力してください..."
+                placeholder="検索する電話番号を入力してください..."
                 onChange={(e) => setphoneNSearch(e.target.value)}
               />
             </span>
           </div>
           <div className="orderbox">
-            <h2>並び替え(最初の一回目は反応しないバグ？？？)</h2>
+            <h2>並び替え</h2>
             <span className="searchfield">
               <button className="order_btn" onClick={nameSort}>
                 名前
@@ -184,8 +185,8 @@ const Home = (userLoginInfo) => {
           <hr />
           {/* Chart------------------------------------------------------- */}
           <div className="graphcontainer">
-            <h2>新規受注など(今後、連動予定)</h2>
-            <div className="simpoleBarChart"> <Waterfall /> </div>
+           
+            <div className="simpoleBarChart"> <BarChartComponent /> </div>
           </div>
 
           {/* UserList------------------------------------------------------- */}
