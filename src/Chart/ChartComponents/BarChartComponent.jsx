@@ -26,7 +26,7 @@ const BarChartComponent = () => {
   const onSubmit = (e) => {
     e.preventDefault();
 
-    console.log([...data, [{ ...tmp }]]);
+    // console.log([...data, [{ ...tmp }]]);
     setdata([...data, { ...tmp }]);
   };
 

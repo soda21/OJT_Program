@@ -12,6 +12,12 @@ export const userInputs = [
     placeholder: "",
   },
   {
+    id: "住所",
+    label: "住所",
+    type: "text",
+    placeholder: "",
+  },
+  {
     id: "phone",
     label: "電話番号",
     type: "text",

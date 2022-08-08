@@ -4,8 +4,8 @@ import { db } from "../firebase";
 import { collection, deleteDoc, doc, onSnapshot } from "firebase/firestore";
 import { Link } from "react-router-dom";
 import React from "react";
-import Waterfall from "../Chart/ChartComponents/Waterfall";
-import BarChartComponent from "../Chart/ChartComponents/BarChartComponent";
+// import Waterfall from "../Chart/ChartComponents/Waterfall";
+// import BarChartComponent from "../Chart/ChartComponents/BarChartComponent";
 
 const Home = (userLoginInfo) => {
   const [nameSearch, setNameSearch] = useState("");
@@ -39,7 +39,7 @@ const Home = (userLoginInfo) => {
       unsub();
     };
   }, []);
-console.log(data)
+  console.log(data);
   // 並び替え---------------------------------------------------------------------------
 
   // 並び替えボタンを押す------------------------------------------
@@ -102,143 +102,130 @@ console.log(data)
 
   return (
     <div>
-      <div>
-        <hr />
-        {/* 更新履歴------------------------------------------------------- */}
-        <div className="manual">
-          <h3>更新履歴</h3>
-          <p>
-            新規ユーザーの追加、新規ユーザーのメールとパスワードでログイン可能
-          </p>
-          <p>USER情報の削除、更新</p>
-          <p>右上のLOGOUTを押すとLogINページへ</p>
-          <p>
-            8/1右上Navbar、KPI_MONITORINGリンク作成。グラフのたたき台。月別ユーザー数推移など今後使っていく。
-          </p>
-          <p>8/3並び替え、要改善、contextAPIかReduxでGlobalに値に管理させる</p>
-          <p>8/3ダミー値での表を作成</p>
-          <p>
-            8/4検索(名前、Email、電話番号で＆検索可能)、今後contextAPIかReduxにリファクタリング予定{" "}
-          </p>
-          <p>
-            8/5並び替え。(名前、Email、電話番号で並び替え可能)、今後contextAPIかReduxにリファクタリング予定{" "}
-          </p>
-          <hr />
-          {/* 検索・並び替え------------------------------------------------------- */}
-          <h2>検索</h2>
-          <div className="seachbox">
-            <span className="searchfield">
-              <label htmlFor="name">名前</label>
-              <input
-                className="search"
-                placeholder="検索する名前を入力してください..."
-                onChange={(e) => setNameSearch(e.target.value)}
-              />
-            </span>
-            <span className="searchfield">
-              <label htmlFor="email">Email</label>
-              <input
-                className="search"
-                placeholder="検索するemailを入力してください..."
-                onChange={(e) => setEmailSearch(e.target.value)}
-              />
-            </span>
-            <span className="searchfield">
-              <label htmlFor="phone">電話番号</label>
-              <input
-                className="search"
-                placeholder="検索する電話番号を入力してください..."
-                onChange={(e) => setphoneNSearch(e.target.value)}
-              />
-            </span>
-          </div>
-          <div className="orderbox">
-            <h2>並び替え</h2>
-            <span className="searchfield">
-              <button className="order_btn" onClick={nameSort}>
-                名前
-              </button>
-            </span>
-            <span className="searchfield">
-              <button
-                className="order_btn"
-                onClick={(prev) => {
-                  // 並び替えボタンを押すとemailプロパティがtrue、false反転する
-                  setOrderName({ email: !orderName.email, ...prev });
-                }}
-              >
-                Email
-              </button>
-            </span>
-            <span className="searchfield">
-              <button
-                className="order_btn"
-                onClick={(prev) => {
-                  // 並び替えボタンを押すとphoneプロパティがtrue、false反転する
-                  setOrderName({ phone: !orderName.phone, ...prev });
-                }}
-              >
-                Phone
-              </button>
-            </span>
-          </div>
-          <hr />
-          {/* Chart------------------------------------------------------- */}
-          <div className="graphcontainer">
+      <hr />
+
+      <hr />
+      {/* 検索・並び替え------------------------------------------------------- */}
+      <div className="SearchContainer">
+        <h2>検索</h2>
+        <div className="seachbox">
+          <span className="searchfield">
+            <label htmlFor="name">名前</label>
+            <input
+              className="search"
+              placeholder="検索する名前を入力してください..."
+              onChange={(e) => setNameSearch(e.target.value)}
+            />
+          </span>
+          <span className="searchfield">
+            <label htmlFor="email">Email</label>
+            <input
+              className="search"
+              placeholder="検索するemailを入力してください..."
+              onChange={(e) => setEmailSearch(e.target.value)}
+            />
+          </span>
+          <span className="searchfield">
+            <label htmlFor="phone">電話番号</label>
+            <input
+              className="search"
+              placeholder="検索する電話番号を入力してください..."
+              onChange={(e) => setphoneNSearch(e.target.value)}
+            />
+          </span>
+        </div>
+      </div>
+      <hr />
+      <div className="orderContainer">
+        <div className="orderByName">
+          <h2>並び替え</h2>
+          <span className="searchfield">
+            <button className="order_btn" onClick={nameSort}>
+              名前
+            </button>
+          </span>
+          <span className="searchfield">
+            <button
+              className="order_btn"
+              onClick={(prev) => {
+                // 並び替えボタンを押すとemailプロパティがtrue、false反転する
+                setOrderName({ email: !orderName.email, ...prev });
+              }}
+            >
+              Email
+            </button>
+          </span>
+          <span className="searchfield">
+            <button
+              className="order_btn"
+              onClick={(prev) => {
+                // 並び替えボタンを押すとphoneプロパティがtrue、false反転する
+                setOrderName({ phone: !orderName.phone, ...prev });
+              }}
+            >
+              Phone
+            </button>
+          </span>
+        </div>
+      </div>
+      <hr />
+      {/* Chart------------------------------------------------------- */}
+      {/* <div className="graphcontainer">
            
             <div className="simpoleBarChart"> <BarChartComponent /> </div>
-          </div>
+          </div> */}
 
-          {/* UserList------------------------------------------------------- */}
-          <hr />
-          <h2> 登録User一覧</h2>
-          <Link to="/adduser" className="topbarIconContainer">
-            <button className="useradd">新規ユーザーの追加</button>
-          </Link>
-
-          <div className="tablewrapper"></div>
-          <div>
-            <table>
-              <tbody>
-                <tr>
-                  <th>名前</th>
-                  <th>Email</th>
-                  <th>電話番号</th>
-                  {/* <th>password</th> */}
-                  <th>削除</th>
-                  <th>更新</th>
-                </tr>
-                {search(data).map((user) => (
-                  <tr key={user.name}>
-                    <td>{user.name}</td>
-                    <td>{user.email}</td>
-                    <td> {user.phone}</td>
-                    {/* <td> {user.password}</td> */}
-                    <td>
-                      <div
-                        className="deleteButton"
-                        onClick={() => handleDelete(user.id)}
-                      >
-                        削除
-                      </div>
-                    </td>
-                    <td>
-                      {/* emailを渡すときは上のようにする今回は使わなかった・・・ */}
-                      {/* <Link to={`/user/${user.id}`} state={{ email:`${user.email}`}} style={{ textDecoration: "none" }}> */}
-                      <Link
-                        to={`/user/${user.id}`}
-                        state={{ email: `${user.email}` }}
-                        style={{ textDecoration: "none" }}
-                      >
-                        <div className="viewButton">更新</div>
-                      </Link>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
+      {/* UserList------------------------------------------------------- */}
+      <hr />
+      <div className="inputContainer">
+        <h2> 新規ユーザーの登録</h2>
+        <Link to="/adduser" className="topbarIconContainer">
+          <button className="useradd">新規ユーザーの追加</button>
+        </Link>
+      </div>
+      <div className="tablewrapper"></div>
+      <div>
+        <table>
+          <tbody>
+            <tr>
+              <th>名前</th>
+              <th>Email</th>
+              <th>電話番号</th>
+              <th>住所</th>
+              {/* <th>password</th> */}
+              <th>詳細画面</th>
+              <th>削除</th>
+            </tr>
+            {search(data).map((user) => (
+              <tr key={user.name}>
+                <td>{user.name}</td>
+                <td>{user.email}</td>
+                <td> {user.phone}</td>
+                <td> {user?.address}</td>
+                {/* <td> {user.password}</td> */}
+                <td>
+                  {/* emailを渡すときは上のようにする今回は使わなかった・・・ */}
+                  {/* <Link to={`/user/${user.id}`} state={{ email:`${user.email}`}} style={{ textDecoration: "none" }}> */}
+                  <Link
+                    to={`/user/${user.id}`}
+                    state={{ email: `${user.email}` }}
+                    style={{ textDecoration: "none" }}
+                  >
+                    <button className="viewButton">詳細画面</button>
+                  </Link>
+                </td>
+                <td>
+                  <button
+                    className="deleteButton"
+                    onClick={() => handleDelete(user.id)}
+                  >
+                    削除
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     </div>
   );

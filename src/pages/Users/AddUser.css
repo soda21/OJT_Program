@@ -1,16 +1,18 @@
 .wrapper {
+  padding-top: 45px;
   width: 100vw;
   height: 100vh;
   background-color: white;
   display: flex;
-  align-items: center;
+
   justify-content: center;
 }
 .formInput {
+
   display: flex;
   flex-direction: column;
   width: 25%;
-  padding: 20px;
+  padding: 0 0 0 0;
 }
 
 input {
@@ -20,7 +22,7 @@ input {
   border: 1px solid gray;
 }
 
-h1{
+h1 {
   margin-bottom: 10px;
 }
 label {
@@ -30,13 +32,12 @@ label {
   color: gray;
 }
 
-
 button {
   width: 40%;
   border: none;
   padding: 15px 20px;
   background-color: teal;
   color: white;
-  cursor: pointer;  
+  cursor: pointer;
   margin: 10px 0 10px 0;
 }

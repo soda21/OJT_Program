@@ -3,12 +3,7 @@ import { db } from "../../firebase";
 import "./AddUser.css";
 import { useParams, useNavigate } from "react-router-dom";
 
-import {
-  doc,
-  updateDoc,
-  collection,
-  onSnapshot,
-} from "firebase/firestore";
+import { doc, updateDoc, collection, onSnapshot } from "firebase/firestore";
 
 // データを取得する
 const UserDetail = () => {
@@ -36,7 +31,7 @@ const UserDetail = () => {
       unsub();
     };
   }, [detailUserId]);
-// データをupdateする
+  // データをupdateする
   const handleUpdate = async (e) => {
     e.preventDefault();
     try {
@@ -51,7 +46,7 @@ const UserDetail = () => {
       console.log(err);
     }
   };
-// フォームの内容を更新する
+  // フォームの内容を更新する
   const handleChange = (e) => {
     setData({ ...data, [e.target.name]: e.target.value });
   };
@@ -72,7 +67,6 @@ const UserDetail = () => {
             onChange={handleChange}
             value={data.name}
           />
-
           <label htmlFor="email">Email</label>
           <input
             type="email"
@@ -90,6 +84,14 @@ const UserDetail = () => {
             onChange={handleChange}
             value={data.phone}
           />
+          <br /> <label htmlFor="phone">住所</label>
+          <input
+            type="text"
+            name="address"
+            placehoder="address"
+            onChange={handleChange}
+            value={data?.address}
+          />
           <br />
           <label htmlFor="password">password</label>
           <input
@@ -100,7 +102,7 @@ const UserDetail = () => {
             value={data.password}
           />
           <br />
-          <button type="submit">update</button>
+          <button type="submit">更新する</button>
         </form>
       </div>
     </div>
