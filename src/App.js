@@ -10,6 +10,7 @@ import { Routes, Route } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "./context/AuthContext";
 import { userInputs } from "./formSource";
+import Product from "./pages/Products/Product"
 import {Chart} from "./Chart/Chart"
 function App() {
   const { currentUser } = useContext(AuthContext);
@@ -50,6 +51,14 @@ function App() {
             element={
               <RequireAuth>
                 <UserDetail inputs={userInputs} />
+              </RequireAuth>
+            }
+          />
+             <Route
+            path="product"
+            element={
+              <RequireAuth>
+                <Product  />
               </RequireAuth>
             }
           />

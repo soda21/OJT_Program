@@ -11,6 +11,9 @@
   margin: 20px;
   flex-direction: column;
 }
+.optionContainer{
+  display: ;
+}
 .inputContainer {
   margin-top: 16px;
   display: flex;

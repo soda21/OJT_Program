@@ -53,7 +53,7 @@ const AddUser = ({ inputs }) => {
           <h1>ユーザーの追加</h1>
         </div>
         <form onSubmit={onSubmit}>
-          {inputs.map((input) => (
+          {inputs?.map((input) => (
             <div key={input.name}>
               <label htmlfor="name">{input.label}</label>
               <input

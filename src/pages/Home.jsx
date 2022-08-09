@@ -5,7 +5,7 @@ import { collection, deleteDoc, doc, onSnapshot } from "firebase/firestore";
 import { Link } from "react-router-dom";
 import React from "react";
 // import Waterfall from "../Chart/ChartComponents/Waterfall";
-// import BarChartComponent from "../Chart/ChartComponents/BarChartComponent";
+import BarChartComponent from "../Chart/ChartComponents/BarChartComponent";
 
 const Home = (userLoginInfo) => {
   const [nameSearch, setNameSearch] = useState("");
@@ -106,66 +106,68 @@ const Home = (userLoginInfo) => {
 
       <hr />
       {/* 検索・並び替え------------------------------------------------------- */}
-      <div className="SearchContainer">
-        <h2>検索</h2>
-        <div className="seachbox">
-          <span className="searchfield">
-            <label htmlFor="name">名前</label>
-            <input
-              className="search"
-              placeholder="検索する名前を入力してください..."
-              onChange={(e) => setNameSearch(e.target.value)}
-            />
-          </span>
-          <span className="searchfield">
-            <label htmlFor="email">Email</label>
-            <input
-              className="search"
-              placeholder="検索するemailを入力してください..."
-              onChange={(e) => setEmailSearch(e.target.value)}
-            />
-          </span>
-          <span className="searchfield">
-            <label htmlFor="phone">電話番号</label>
-            <input
-              className="search"
-              placeholder="検索する電話番号を入力してください..."
-              onChange={(e) => setphoneNSearch(e.target.value)}
-            />
-          </span>
+      <div className="optionContainer">
+        <div className="SearchContainer">
+          <h2>検索</h2>
+          <div className="seachbox">
+            <span className="searchfield">
+              <label htmlFor="name">名前</label>
+              <input
+                className="search"
+                placeholder="検索する名前を入力してください..."
+                onChange={(e) => setNameSearch(e.target.value)}
+              />
+            </span>
+            <span className="searchfield">
+              <label htmlFor="email">Email</label>
+              <input
+                className="search"
+                placeholder="検索するemailを入力してください..."
+                onChange={(e) => setEmailSearch(e.target.value)}
+              />
+            </span>
+            <span className="searchfield">
+              <label htmlFor="phone">電話番号</label>
+              <input
+                className="search"
+                placeholder="検索する電話番号を入力してください..."
+                onChange={(e) => setphoneNSearch(e.target.value)}
+              />
+            </span>
+          </div>
         </div>
-      </div>
-      <hr />
-      <div className="orderContainer">
-        <div className="orderByName">
-          <h2>並び替え</h2>
-          <span className="searchfield">
-            <button className="order_btn" onClick={nameSort}>
-              名前
-            </button>
-          </span>
-          <span className="searchfield">
-            <button
-              className="order_btn"
-              onClick={(prev) => {
-                // 並び替えボタンを押すとemailプロパティがtrue、false反転する
-                setOrderName({ email: !orderName.email, ...prev });
-              }}
-            >
-              Email
-            </button>
-          </span>
-          <span className="searchfield">
-            <button
-              className="order_btn"
-              onClick={(prev) => {
-                // 並び替えボタンを押すとphoneプロパティがtrue、false反転する
-                setOrderName({ phone: !orderName.phone, ...prev });
-              }}
-            >
-              Phone
-            </button>
-          </span>
+        <hr />
+        <div className="orderContainer">
+          <div className="orderByName">
+            <h2>並び替え</h2>
+            <span className="searchfield">
+              <button className="order_btn" onClick={nameSort}>
+                名前
+              </button>
+            </span>
+            <span className="searchfield">
+              <button
+                className="order_btn"
+                onClick={(prev) => {
+                  // 並び替えボタンを押すとemailプロパティがtrue、false反転する
+                  setOrderName({ email: !orderName.email, ...prev });
+                }}
+              >
+                Email
+              </button>
+            </span>
+            <span className="searchfield">
+              <button
+                className="order_btn"
+                onClick={(prev) => {
+                  // 並び替えボタンを押すとphoneプロパティがtrue、false反転する
+                  setOrderName({ phone: !orderName.phone, ...prev });
+                }}
+              >
+                Phone
+              </button>
+            </span>
+          </div>
         </div>
       </div>
       <hr />
@@ -192,6 +194,7 @@ const Home = (userLoginInfo) => {
               <th>Email</th>
               <th>電話番号</th>
               <th>住所</th>
+
               {/* <th>password</th> */}
               <th>詳細画面</th>
               <th>削除</th>
@@ -200,6 +203,7 @@ const Home = (userLoginInfo) => {
               <tr key={user.name}>
                 <td>{user.name}</td>
                 <td>{user.email}</td>
+
                 <td> {user.phone}</td>
                 <td> {user?.address}</td>
                 {/* <td> {user.password}</td> */}

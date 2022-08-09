@@ -26,7 +26,16 @@ const Navbar = () => {
             <span className="logo">OJT_PAGE</span>
           </Link>
         </div>
+        
+         
+          
         <div className="topRight">
+        {currentUser && (
+            <Link to="/product" className="topbarIconContainer">
+              <span>Products</span>
+            </Link>
+          )}
+
           {currentUser && (
             <Link to="/chart" className="topbarIconContainer">
               <span>KPI_MONITORING</span>
