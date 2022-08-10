@@ -1,11 +1,10 @@
 import { useEffect, useState } from "react";
-import "./Home.css";
-import { db } from "../firebase";
+import "../Home.css";
+import { db } from "../../firebase";
 import { collection, deleteDoc, doc, onSnapshot } from "firebase/firestore";
 import { Link } from "react-router-dom";
 import React from "react";
 // import Waterfall from "../Chart/ChartComponents/Waterfall";
-import BarChartComponent from "../Chart/ChartComponents/BarChartComponent";
 
 const Home = (userLoginInfo) => {
   const [nameSearch, setNameSearch] = useState("");
@@ -22,7 +21,7 @@ const Home = (userLoginInfo) => {
   //  firebaseからデータを取得--------------------------------------------------------
   useEffect(() => {
     const unsub = onSnapshot(
-      collection(db, "user"),
+      collection(db, "product"),
       (snapShot) => {
         let list = [];
         snapShot.docs.forEach((doc) => {
@@ -64,8 +63,6 @@ const Home = (userLoginInfo) => {
 
   // 並び替えメソッド　sortTargetにname,email,phoneが渡される
   const sortByName = (sortTarget) => {
-    console.log("初回3回再レンダリング？・・・", orderName);
-    // useStateのorderNameのブーリアン値trueだったら(sortTargetはname,email,phone)
     if (orderName[sortTarget]) {
       data.sort((a, b) => {
         // 並び替え
@@ -83,9 +80,9 @@ const Home = (userLoginInfo) => {
   const search = (data) => {
     return data.filter(
       (item) =>
-        item.name.includes(nameSearch) &&
-        item.email.includes(emailSearch) &&
-        item.phone.includes(phoneNSearch)
+        item.company.includes(nameSearch) &&
+        item.company.includes(emailSearch) &&
+        item.company.includes(phoneNSearch)
     );
   };
   // 削除-------------------------------------------------------------------------
@@ -108,14 +105,14 @@ const Home = (userLoginInfo) => {
       {/* 検索・並び替え------------------------------------------------------- */}
       <div className="optionContainer">
         <div className="title_Name">
-          <h1>ユーザー登録</h1>
+          <h1>受注情報</h1>
         </div>
         <hr />
         <div className="SearchContainer">
           <h2>検索</h2>
           <div className="seachbox">
             <span className="searchfield">
-              <label htmlFor="name">名前</label>
+              <label htmlFor="name">取引先</label>
               <input
                 className="search"
                 placeholder="検索する名前を入力してください..."
@@ -123,7 +120,7 @@ const Home = (userLoginInfo) => {
               />
             </span>
             <span className="searchfield">
-              <label htmlFor="email">Email</label>
+              <label htmlFor="email">商品名</label>
               <input
                 className="search"
                 placeholder="検索するemailを入力してください..."
@@ -131,7 +128,7 @@ const Home = (userLoginInfo) => {
               />
             </span>
             <span className="searchfield">
-              <label htmlFor="phone">電話番号</label>
+              <label htmlFor="phone">受注先部門</label>
               <input
                 className="search"
                 placeholder="検索する電話番号を入力してください..."
@@ -146,7 +143,7 @@ const Home = (userLoginInfo) => {
             <h2>並び替え</h2>
             <span className="searchfield">
               <button className="order_btn" onClick={nameSort}>
-                名前
+                取引先
               </button>
             </span>
             <span className="searchfield">
@@ -157,7 +154,7 @@ const Home = (userLoginInfo) => {
                   setOrderName({ email: !orderName.email, ...prev });
                 }}
               >
-                Email
+                商品名
               </button>
             </span>
             <span className="searchfield">
@@ -168,7 +165,7 @@ const Home = (userLoginInfo) => {
                   setOrderName({ phone: !orderName.phone, ...prev });
                 }}
               >
-                Phone
+                受注先部門
               </button>
             </span>
           </div>
@@ -184,9 +181,9 @@ const Home = (userLoginInfo) => {
       {/* UserList------------------------------------------------------- */}
       <hr />
       <div className="inputContainer">
-        <h2> 新規ユーザーの登録</h2>
-        <Link to="/adduser" className="topbarIconContainer">
-          <button className="useradd">新規ユーザーの追加</button>
+        <h2> 受注商品の登録</h2>
+        <Link to="/product" className="topbarIconContainer">
+          <button className="useradd">受注商品の登録</button>
         </Link>
       </div>
       <div className="tablewrapper"></div>
@@ -194,26 +191,26 @@ const Home = (userLoginInfo) => {
         <table>
           <tbody>
             <tr>
-              <th>名前</th>
-              <th>Email</th>
-              <th>電話番号</th>
-              <th>住所</th>
+              <th>納品日</th>
+              <th>商品名</th>
+              <th>受注先企業</th>
+              <th>受注先部音</th>
+              <th>金額</th>
 
               {/* <th>password</th> */}
               <th>詳細画面</th>
               <th>削除</th>
             </tr>
-            {search(data).map((user) => (
-              <tr key={user.name}>
-                <td>{user.name}</td>
-                <td>{user.email}</td>
+            {search(data)?.map((user) => (
+              <tr key={user.product_name}>
+                <td> {user?.sale_date}</td>
+                <td> {user?.product_name}</td>
+                <td>{user?.company}</td>
+                <td>{user?.departent}</td>
 
-                <td> {user.phone}</td>
-                <td> {user?.address}</td>
+                <td> {user?.price}</td>
                 {/* <td> {user.password}</td> */}
                 <td>
-                  {/* emailを渡すときは上のようにする今回は使わなかった・・・ */}
-                  {/* <Link to={`/user/${user.id}`} state={{ email:`${user.email}`}} style={{ textDecoration: "none" }}> */}
                   <Link
                     to={`/user/${user.id}`}
                     state={{ email: `${user.email}` }}

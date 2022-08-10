@@ -31,8 +31,13 @@ const Navbar = () => {
           
         <div className="topRight">
         {currentUser && (
-            <Link to="/product" className="topbarIconContainer">
-              <span>Products</span>
+            <Link to="/productlist" className="topbarIconContainer">
+              <span>受注情報</span>
+            </Link>
+          )}
+        {currentUser && (
+            <Link to="/" className="topbarIconContainer">
+              <span>ユーザー情報</span>
             </Link>
           )}
 

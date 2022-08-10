@@ -10,8 +10,10 @@ import { Routes, Route } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "./context/AuthContext";
 import { userInputs } from "./formSource";
-import Product from "./pages/Products/Product"
-import {Chart} from "./Chart/Chart"
+import Product from "./pages/Products/Product";
+import ProductList from "./pages/Products/ProductList";
+import { Chart } from "./Chart/Chart";
+
 function App() {
   const { currentUser } = useContext(AuthContext);
   // currenUserがfalseの場合、top画面にいけないようにRequireAuthでバインドをかける
@@ -24,7 +26,7 @@ function App() {
   return (
     <>
       <Navbar />
-      <Message />
+      {/* <Message /> */}
       <Routes>
         <Route path="/">
           <Route path="login" element={<Login />} />
@@ -54,11 +56,20 @@ function App() {
               </RequireAuth>
             }
           />
-             <Route
+          <Route
             path="product"
             element={
               <RequireAuth>
-                <Product  />
+                <Product />
+              </RequireAuth>
+            }
+          />
+
+          <Route
+            path="productlist"
+            element={
+              <RequireAuth>
+                <ProductList />
               </RequireAuth>
             }
           />

@@ -2,10 +2,13 @@ import React, { useState, useEffect } from "react";
 import { db } from "../../firebase";
 // import "./AddUser.css";
 import { useParams, useNavigate } from "react-router-dom";
+import { serverTimestamp, setDoc, addDoc } from "firebase/firestore";
+import { Link } from "react-router-dom";
 
 import { doc, updateDoc, collection, onSnapshot } from "firebase/firestore";
 const Product = () => {
   const [data, setData] = useState({});
+    const navigate = useNavigate();
 
   // フォームの内容を更新する
   const handleChange = (e) => {
@@ -16,14 +19,19 @@ const Product = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const userDocumentRef = doc(db, "product");
-      await updateDoc(userDocumentRef, {
+      const userDocumentRef = collection(db, "product");
+      const documentRef = await addDoc(userDocumentRef, {
         ...data,
+        timeStamp: serverTimestamp(),
       });
+      console.log(documentRef);
+        // ルートに戻す
+        navigate("/productlist")
     } catch (err) {
       console.log(err);
     }
   };
+console.log(data)
 
   return (
     <div className="wrapper">
@@ -32,14 +40,22 @@ const Product = () => {
           <h2>商品の登録</h2>
         </div>
         <form onSubmit={handleSubmit}>
-          <label htmlFor="name">商品名</label>
+          <label htmlFor="name">納品日</label>
+          <input
+            type="date"
+            name="sale_date"
+            placehoder="納品日"
+            onChange={handleChange}
+          />
+               <label htmlFor="email">商品名</label>
           <input
             type="text"
             name="product_name"
-            placehoder="name"
+            placehoder="product_name"
             onChange={handleChange}
           />
-          <label htmlFor="email">部門</label>
+          <br />
+          <label htmlFor="email">販売元部門</label>
           <input
             type="text"
             name="departent"
