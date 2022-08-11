@@ -4,11 +4,11 @@ import { db } from "../../firebase";
 import { useParams, useNavigate } from "react-router-dom";
 import { serverTimestamp, setDoc, addDoc } from "firebase/firestore";
 import { Link } from "react-router-dom";
-
+import { v4 as uuidv4 } from "uuid";
 import { doc, updateDoc, collection, onSnapshot } from "firebase/firestore";
 const Product = () => {
   const [data, setData] = useState({});
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
   // フォームの内容を更新する
   const handleChange = (e) => {
@@ -21,17 +21,17 @@ const Product = () => {
     try {
       const userDocumentRef = collection(db, "product");
       const documentRef = await addDoc(userDocumentRef, {
+        id: uuidv4(),
         ...data,
         timeStamp: serverTimestamp(),
       });
       console.log(documentRef);
-        // ルートに戻す
-        navigate("/productlist")
+      // ルートに戻す
+      navigate("/productlist");
     } catch (err) {
       console.log(err);
     }
   };
-console.log(data)
 
   return (
     <div className="wrapper">
@@ -47,7 +47,7 @@ console.log(data)
             placehoder="納品日"
             onChange={handleChange}
           />
-               <label htmlFor="email">商品名</label>
+          <label htmlFor="email">商品名</label>
           <input
             type="text"
             name="product_name"

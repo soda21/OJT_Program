@@ -7,9 +7,9 @@ import React from "react";
 // import Waterfall from "../Chart/ChartComponents/Waterfall";
 
 const Home = (userLoginInfo) => {
-  const [nameSearch, setNameSearch] = useState("");
-  const [emailSearch, setEmailSearch] = useState("");
-  const [phoneNSearch, setphoneNSearch] = useState("");
+  const [clientNameSearch, setclientNameSearch] = useState("");
+  const [orderNameSearch, setOrderNameSearch] = useState("");
+  const [clientSearch, setClient] = useState("");
   const [data, setData] = useState([]);
   // 並び替えをするためusestate　並び替えボタンを押すとboolean値が反転する
   const [orderName, setOrderName] = useState({
@@ -51,15 +51,15 @@ const Home = (userLoginInfo) => {
   // useStateで並び替え管理、並び替えボタンを押したらboolean値反転
   // 反転したらuseeffectで並び替えメソッド発火させる
   useEffect(() => {
-    sortByName("name");
+    sortByName("product_name");
     // エラーがでるのでボタン押すメソッドをdependencyに
   }, [nameSort]);
   useEffect(() => {
-    sortByName("email");
-  }, [orderName["email"]]);
+    sortByName("product_name");
+  }, [orderName["product_name"]]);
   useEffect(() => {
     sortByName("phone");
-  }, [orderName["phone"]]);
+  }, [orderName["product_name"]]);
 
   // 並び替えメソッド　sortTargetにname,email,phoneが渡される
   const sortByName = (sortTarget) => {
@@ -80,27 +80,25 @@ const Home = (userLoginInfo) => {
   const search = (data) => {
     return data.filter(
       (item) =>
-        item.company.includes(nameSearch) &&
-        item.company.includes(emailSearch) &&
-        item.company.includes(phoneNSearch)
+        item.product_name?.includes(clientNameSearch) &&
+        item.company?.includes(orderNameSearch) &&
+        item.departent?.includes(clientSearch)
     );
   };
   // 削除-------------------------------------------------------------------------
   const handleDelete = async (id) => {
     if (window.confirm("本当に削除しますか")) {
       try {
-        await deleteDoc(doc(db, "users", id));
+        await deleteDoc(doc(db, "product", id));
         setData(data.filter((item) => item.id !== id));
       } catch (err) {
         console.log(err);
       }
     }
   };
-
   return (
     <div>
       <hr />
-
       <hr />
       {/* 検索・並び替え------------------------------------------------------- */}
       <div className="optionContainer">
@@ -112,27 +110,27 @@ const Home = (userLoginInfo) => {
           <h2>検索</h2>
           <div className="seachbox">
             <span className="searchfield">
-              <label htmlFor="name">取引先</label>
+              <label htmlFor="supplier">取引先</label>
               <input
                 className="search"
-                placeholder="検索する名前を入力してください..."
-                onChange={(e) => setNameSearch(e.target.value)}
+                placeholder="検索する名前を入力..."
+                onChange={(e) => setclientNameSearch(e.target.value)}
               />
             </span>
             <span className="searchfield">
-              <label htmlFor="email">商品名</label>
+              <label htmlFor="commodity">商品名</label>
               <input
                 className="search"
-                placeholder="検索するemailを入力してください..."
-                onChange={(e) => setEmailSearch(e.target.value)}
+                placeholder="検索する商品名を入力"
+                onChange={(e) => setOrderNameSearch(e.target.value)}
               />
             </span>
             <span className="searchfield">
-              <label htmlFor="phone">受注先部門</label>
+              <label htmlFor="Order_recipient">受注先部門</label>
               <input
                 className="search"
-                placeholder="検索する電話番号を入力してください..."
-                onChange={(e) => setphoneNSearch(e.target.value)}
+                placeholder="検索する受注先を入力..."
+                onChange={(e) => setClient(e.target.value)}
               />
             </span>
           </div>
@@ -202,7 +200,7 @@ const Home = (userLoginInfo) => {
               <th>削除</th>
             </tr>
             {search(data)?.map((user) => (
-              <tr key={user.product_name}>
+              <tr key={user?.product_name}>
                 <td> {user?.sale_date}</td>
                 <td> {user?.product_name}</td>
                 <td>{user?.company}</td>
@@ -212,8 +210,8 @@ const Home = (userLoginInfo) => {
                 {/* <td> {user.password}</td> */}
                 <td>
                   <Link
-                    to={`/user/${user.id}`}
-                    state={{ email: `${user.email}` }}
+                    to={`/product/${user.id}`}
+                    // state={{ email: `${user.id}` }}
                     style={{ textDecoration: "none" }}
                   >
                     <button className="viewButton">詳細画面</button>

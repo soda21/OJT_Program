@@ -12,6 +12,7 @@ import { AuthContext } from "./context/AuthContext";
 import { userInputs } from "./formSource";
 import Product from "./pages/Products/Product";
 import ProductList from "./pages/Products/ProductList";
+import ProductDetail from "./pages/Products/ProductDetail";
 import { Chart } from "./Chart/Chart";
 
 function App() {
@@ -39,7 +40,6 @@ function App() {
               </RequireAuth>
             }
           />
-
           <Route
             path="adduser"
             element={
@@ -64,12 +64,19 @@ function App() {
               </RequireAuth>
             }
           />
-
           <Route
             path="productlist"
             element={
               <RequireAuth>
                 <ProductList />
+              </RequireAuth>
+            }
+          />{" "}
+          <Route
+            path="product/:id"
+            element={
+              <RequireAuth>
+                <ProductDetail />
               </RequireAuth>
             }
           />
