@@ -10,11 +10,11 @@ const Home = (userLoginInfo) => {
   const [orderNameSearch, setOrderNameSearch] = useState("");
   const [clientSearch, setClientSearch] = useState("");
   const [clientSales, setClientSalesSearch] = useState("");
-
   const [data, setData] = useState([]);
   // 並び替えをするためusestate　並び替えボタンを押すとboolean値が反転する
   const [orderName, setOrderName] = useState([]);
-
+  const [totalMaximum, setTotalMaximum] = useState("");
+  const [MonthlySales, setMonthlySales] = useState();
   //  firebaseからデータを取得--------------------------------------------------------
 
   useEffect(() => {
@@ -41,15 +41,51 @@ const Home = (userLoginInfo) => {
       unsub();
     };
   }, []);
+
   console.log(data);
+
+  //  グラフ用--------------------------------------------------------
+
+
+  useEffect(() => {
+    // const newData=[...expenses,...chartDataPoints]
+    let chartDataPoints = [
+      { Date: "2022-01", price: 0 },
+      { Date: "2022-02", price: 0 },
+      { Date: "2022-03", price: 0 },
+      { Date: "2022-04", price: 0 },
+      { Date: "2022-05", price: 0 },
+      { Date: "2022-06", price: 0 },
+      { Date: "2022-07", price: 0 },
+      { Date: "2022-08", price: 0 },
+      { Date: "2022-09", price: 0 },
+      { Date: "2022-10", price: 0 },
+      { Date: "2022-11", price: 0 },
+      { Date: "2022-12", price: 0 },
+    ];
+    // for (const expense of expenses) {
+    const calculateMonth = () =>
+      data.map((expense, index) => {
+
+        chartDataPoints[Number(expense.sale_date.slice(5, 7)) - 1].price +=
+          Number(expense.price);
+      });
+    console.log(chartDataPoints);
+
+    setMonthlySales(chartDataPoints);
+    console.log(MonthlySales);
+    const dataPointValues = MonthlySales?.map((dataPoint) => dataPoint.price);
+    console.log(dataPointValues);
+      
+    // setTotalMaximum(Math.max(...dataPointValues));
+    return () => {
+      calculateMonth();
+    };
+    // console.log(totalMaximum);
+  }, []);
+  // console.log(MonthlySales);
   // 並び替え---------------------------------------------------------------------------
-  const nameSort = (prev) => {
-    // 並び替えボタンを押すとnameプロパティがtrue、false反転する
-    setOrderName({
-      product_name: !orderName.product_name,
-      ...prev,
-    });
-  };
+
   // useStateで並び替え管理、並び替えボタンを押したらboolean値反転
   // 反転したらuseeffectで並び替えメソッド発火させる
   useEffect(() => {
@@ -100,7 +136,6 @@ const Home = (userLoginInfo) => {
       }
     }
   };
-  console.log(orderName);
 
   // console.log(orderName.product_name);
   // console.log(orderName.sale_date);
@@ -205,6 +240,21 @@ const Home = (userLoginInfo) => {
                 金額
               </button>
             </span>
+            <span>最大売上高{totalMaximum}</span>
+            <table>
+              <tbody>
+                <tr>
+                  <th>月</th>
+                  <th>売上</th>
+                </tr>
+                {MonthlySales?.map((sales) => (
+                  <tr key={sales?.Date}>
+                    <td> {sales?.Date}</td>
+                    <td> {sales?.price}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
