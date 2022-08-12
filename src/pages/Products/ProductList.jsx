@@ -7,19 +7,19 @@ import React from "react";
 // import Waterfall from "../Chart/ChartComponents/Waterfall";
 
 const Home = (userLoginInfo) => {
-  const [clientNameSearch, setclientNameSearch] = useState("");
   const [orderNameSearch, setOrderNameSearch] = useState("");
-  const [clientSearch, setClient] = useState("");
+  const [clientSearch, setClientSearch] = useState("");
+  const [clientSales, setClientSalesSearch] = useState("");
+
   const [data, setData] = useState([]);
   // 並び替えをするためusestate　並び替えボタンを押すとboolean値が反転する
-  const [orderName, setOrderName] = useState({
-    name: true,
-    email: true,
-    phone: true,
-  });
+  const [orderName, setOrderName] = useState([]);
 
   //  firebaseからデータを取得--------------------------------------------------------
+
   useEffect(() => {
+    let ignore = false;
+
     const unsub = onSnapshot(
       collection(db, "product"),
       (snapShot) => {
@@ -27,7 +27,9 @@ const Home = (userLoginInfo) => {
         snapShot.docs.forEach((doc) => {
           list.push({ id: doc.id, ...doc.data() });
         });
-        setData(list);
+        if (!ignore) {
+          setData(list);
+        }
       },
       (error) => {
         console.log(error);
@@ -35,33 +37,35 @@ const Home = (userLoginInfo) => {
     );
 
     return () => {
+      ignore = true;
       unsub();
     };
   }, []);
   console.log(data);
   // 並び替え---------------------------------------------------------------------------
-
-  // 並び替えボタンを押す------------------------------------------
   const nameSort = (prev) => {
     // 並び替えボタンを押すとnameプロパティがtrue、false反転する
-    setOrderName({ name: !orderName.name, ...prev });
+    setOrderName({
+      product_name: !orderName.product_name,
+      ...prev,
+    });
   };
-
-  // --------------------------------------------------------------
   // useStateで並び替え管理、並び替えボタンを押したらboolean値反転
   // 反転したらuseeffectで並び替えメソッド発火させる
   useEffect(() => {
     sortByName("product_name");
-    // エラーがでるのでボタン押すメソッドをdependencyに
-  }, [nameSort]);
+  }, [orderName.product_name]);
   useEffect(() => {
-    sortByName("product_name");
-  }, [orderName["product_name"]]);
+    sortByName("sale_date");
+  }, [orderName.sale_date]);
   useEffect(() => {
-    sortByName("phone");
-  }, [orderName["product_name"]]);
+    sortByName("company");
+  }, [orderName.company]);
+  useEffect(() => {
+    sortByName("price");
+  }, [orderName.price]);
 
-  // 並び替えメソッド　sortTargetにname,email,phoneが渡される
+  // 並び替えメソッド　sortTargetにproduct_name,sale_date,companyが渡される
   const sortByName = (sortTarget) => {
     if (orderName[sortTarget]) {
       data.sort((a, b) => {
@@ -80,9 +84,9 @@ const Home = (userLoginInfo) => {
   const search = (data) => {
     return data.filter(
       (item) =>
-        item.product_name?.includes(clientNameSearch) &&
-        item.company?.includes(orderNameSearch) &&
-        item.departent?.includes(clientSearch)
+        item.product_name?.includes(orderNameSearch) &&
+        item.company?.includes(clientSearch) &&
+        item.price?.includes(clientSales)
     );
   };
   // 削除-------------------------------------------------------------------------
@@ -96,6 +100,12 @@ const Home = (userLoginInfo) => {
       }
     }
   };
+  console.log(orderName);
+
+  // console.log(orderName.product_name);
+  // console.log(orderName.sale_date);
+  // console.log(orderName.company);
+  // console.log(orderName.price);
   return (
     <div>
       <hr />
@@ -114,7 +124,7 @@ const Home = (userLoginInfo) => {
               <input
                 className="search"
                 placeholder="検索する名前を入力..."
-                onChange={(e) => setclientNameSearch(e.target.value)}
+                onChange={(e) => setClientSearch(e.target.value)}
               />
             </span>
             <span className="searchfield">
@@ -125,12 +135,20 @@ const Home = (userLoginInfo) => {
                 onChange={(e) => setOrderNameSearch(e.target.value)}
               />
             </span>
-            <span className="searchfield">
+            {/* <span className="searchfield">
               <label htmlFor="Order_recipient">受注先部門</label>
               <input
                 className="search"
                 placeholder="検索する受注先を入力..."
-                onChange={(e) => setClient(e.target.value)}
+                onChange={(e) => setClientSearch(e.target.value)}
+              />
+            </span> */}
+            <span className="searchfield">
+              <label htmlFor="Order_recipient">金額</label>
+              <input
+                className="search"
+                placeholder="検索する受注先を入力..."
+                onChange={(e) => setClientSalesSearch(e.target.value)}
               />
             </span>
           </div>
@@ -140,16 +158,15 @@ const Home = (userLoginInfo) => {
           <div className="orderByName">
             <h2>並び替え</h2>
             <span className="searchfield">
-              <button className="order_btn" onClick={nameSort}>
-                取引先
-              </button>
-            </span>
-            <span className="searchfield">
               <button
                 className="order_btn"
                 onClick={(prev) => {
-                  // 並び替えボタンを押すとemailプロパティがtrue、false反転する
-                  setOrderName({ email: !orderName.email, ...prev });
+                  // 並び替えボタンを押すとtrue、false反転する
+                  console.log(prev);
+                  setOrderName({
+                    product_name: !orderName.product_name,
+                    ...prev,
+                  });
                 }}
               >
                 商品名
@@ -159,11 +176,33 @@ const Home = (userLoginInfo) => {
               <button
                 className="order_btn"
                 onClick={(prev) => {
-                  // 並び替えボタンを押すとphoneプロパティがtrue、false反転する
-                  setOrderName({ phone: !orderName.phone, ...prev });
+                  // 並び替えボタンを押すとtrue、false反転する
+                  setOrderName({ company: !orderName.company, ...prev });
                 }}
               >
-                受注先部門
+                受注先
+              </button>
+            </span>
+            <span className="searchfield">
+              <button
+                className="order_btn"
+                onClick={(prev) => {
+                  // 並び替えボタンを押すとtrue、false反転する
+                  setOrderName({ sale_date: !orderName.sale_date, ...prev });
+                }}
+              >
+                納品日
+              </button>
+            </span>
+            <span className="searchfield">
+              <button
+                className="order_btn"
+                onClick={(prev) => {
+                  // 並び替えボタンを押すとphoneプロパティがtrue、false反転する
+                  setOrderName({ price: !orderName.price, ...prev });
+                }}
+              >
+                金額
               </button>
             </span>
           </div>
@@ -192,7 +231,7 @@ const Home = (userLoginInfo) => {
               <th>納品日</th>
               <th>商品名</th>
               <th>受注先企業</th>
-              <th>受注先部音</th>
+              <th>受注部門</th>
               <th>金額</th>
 
               {/* <th>password</th> */}
